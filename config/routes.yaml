@@ -1,0 +1,54 @@
+homepage:
+    path: /
+    controller: App\Controller\PageController::homepage
+category:
+    path: /kategoria/{category}
+    controller: App\Controller\PageController::category
+product:
+    path: /produkt/{product}
+    controller: App\Controller\PageController::product
+search_entry_point:
+    path: /szukaj/
+    controller: App\Controller\PageController::searchEntryPoint
+search:
+    path: /szukaj/{searchTerm}
+    controller: App\Controller\PageController::search
+review_new:
+    path: /opinie/nowa
+    controller: App\Controller\PageController::reviewNew
+profile:
+    path: /profil/
+    controller: App\Controller\PageController::profile
+profile_change_name:
+    path: /profil/zmienImie
+    controller: App\Controller\PageController::profileChangeName
+cart_delete:
+    path: /koszyk/usun
+    controller: App\Controller\PageController::cartRemove
+wishlist_delete:
+    path: /lista/usun
+    controller: App\Controller\PageController::wishlistRemove
+cart_add:
+    path: /koszyk/dodaj
+    controller: App\Controller\PageController::cartAdd
+wishlist_add:
+    path: /lista/dodaj
+    controller: App\Controller\PageController::wishlistAdd
+cart_buy:
+    path: /koszyk/kup
+    controller: App\Controller\PageController::cartBuy
+cart_check:
+    path: /koszyk/kompatybilnosc
+    controller: App\Controller\PageController::cartCompatibility
+cart:
+    path: /koszyk/
+    controller: App\Controller\PageController::cart
+wishlist_count:
+    path: /lista/liczba
+    controller: App\Controller\PageController::wishlistCount
+wishlist:
+    path: /lista/
+    controller: App\Controller\PageController::wishlist
+ad_random:
+    path: /reklama/
+    controller: App\Controller\PageController::adRandom

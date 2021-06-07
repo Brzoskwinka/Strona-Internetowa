@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %} {% block site_content %}
+<div class="product-fullscreen-overlay hidden">
+  <div class="product-fullscreen-close">
+    <ion-icon name="close-circle" class="icon"></ion-icon>
+  </div>
+  <img class="product-fullscreen-image" src="#" />
+</div>
+<div class="product">
+  <div class="product-left">
+    <div class="product-sticky">
+      <img
+        class="product-image"
+        src="{{ asset('img/products/' ~ product.image ~ '.jpg') }}"
+      />
+      <div class="product-images">
+        <img
+          class="product-images-image"
+          src="{{ asset('img/products/' ~ product.image ~ '.jpg') }}"
+        />
+        <img
+          class="product-images-image"
+          src="{{ asset('img/products/' ~ product.productPhotos[0].image ~ '.jpg') }}"
+        />
+        <img
+          class="product-images-image"
+          src="{{ asset('img/products/' ~ product.productPhotos[1].image ~ '.jpg') }}"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="product-right">
+    <div class="product-data">
+      <a
+        class="product-section"
+        href="{{ path('category', { category: product.category.url }) }}"
+        >{{ product.category.name }} /</a
+      >
+      <p class="product-name">{{ product.name }}</p>
+      <p class="product-reviews-top">
+        Ocena użytkowników: {{ product.reviewsScore }} ({{
+          product.reviewsCount
+        }}
+        {% if product.reviewsCount > 1 and product.reviewsCount < 5 %}opinie{%
+        elseif product.reviewsCount == 1 %}opinia{% elseif product.reviewsCount
+        == 0 or product.reviewsCount >= 5 %}opinii{% endif %})
+      </p>
+      <div class="product-properties-container">
+        <div class="product-properties">
+          {% for property in product.productProperties %}
+          <p class="product-property">
+            <span>{{ property.name }}:</span> {{ property.value }}
+          </p>
+          {% endfor %}
+        </div>
+      </div>
+      {% if product.discount %}
+      <p class="product-discount-active">Promocja!</p>
+      <p class="product-price">
+        <span class="before">{{ product.price }} zł</span>
+        <span class="actual">{{ product.discount.price }} zł</span>
+      </p>
+      {% else %}
+      <p class="product-price">
+        <span class="actual">{{ product.price }} zł</span>
+      </p>
+      {% endif %}
+      <div class="product-actions login-protect">
+        <div class="login-protect-overlay {% if app.user %}hidden{% endif %}">
+          Tylko dla<br />zalogowanych
+        </div>
+        <form
+          method="POST"
+          action="{{ path('cart_add') }}"
+          class="product-to-cart-form"
+        >
+          <input
+            class="hidden"
+            type="number"
+            name="productId"
+            value="{{ product.id }}"
+          />
+          <button class="product-to-cart product-action">
+            Dodaj do koszyka
+          </button>
+        </form>
+        <button class="product-to-wishlist product-action">
+          Dodaj<br />do listy życzeń
+        </button>
+      </div>
+      <p class="product-section">Opis eksperta</p>
+      <p class="product-description">{{ product.description | raw }}</p>
+      <p class="product-section">Opinie o produkcie</p>
+      {% for review in product.reviews %}
+      <div class="product-review">
+        <p class="product-review-owner">{{ review.owner.name }}</p>
+        <p class="product-review-text">{{ review.text }}</p>
+        <p class="product-review-score">
+          Ocena użytkownika: {{ review.score }}
+        </p>
+      </div>
+      {% endfor %} {% if product.reviews|length == 0 %}
+      <p class="product-review-empty">Ten produkt jeszcze nie ma opinii</p>
+      {% endif %}
+      <div class="product-review-add">
+        {% if app.user and not givenReview %}
+        <form method="POST" action="/opinie/nowa">
+          <p class="product-section">Dodaj opinię</p>
+          <textarea
+            name="reviewText"
+            class="product-review-textarea"
+            placeholder="Treść opini..."
+          ></textarea>
+          <input
+            name="reviewId"
+            type="number"
+            value="{{ product.id }}"
+            class="hidden"
+          />
+          <input
+            name="reviewScore"
+            type="number"
+            value="5"
+            class="product-review-score-final hidden"
+          />
+          <div class="product-review-score-container">
+            <div class="product-review-score-choose active" data-score="5">
+              5
+            </div>
+            <div class="product-review-score-choose" data-score="4">4</div>
+            <div class="product-review-score-choose" data-score="3">3</div>
+            <div class="product-review-score-choose" data-score="2">2</div>
+            <div class="product-review-score-choose" data-score="1">1</div>
+          </div>
+          <button type="submit" class="product-review-confirm">
+            Dodaj opinię
+          </button>
+        </form>
+        {% elseif givenReview %}
+        <p class="product-review-login">Już dodałeś opinię do tego produktu</p>
+        {% else %}
+        <p class="product-review-login">Zaloguj się, by dodać opinię</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block javascripts %}
+<script src="{{ asset('js/product.js') }}"></script>
+{% endblock %}

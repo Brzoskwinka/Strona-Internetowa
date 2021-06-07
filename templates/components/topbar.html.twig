@@ -1,0 +1,45 @@
+<header class="topbar">
+  <div class="topbar-top">
+    <a href="{{ path('homepage') }}" class="topbar-logo-link">
+      <img class="topbar-logo-big" src="{{ asset('img/logo.png') }}" />
+      <img class="topbar-logo-mini" src="{{ asset('img/logo-mini.png') }}" />
+    </a>
+    <div class="topbar-actions">
+      <form action="/szukaj/" method="POST">
+        <input
+          name="searchTerm"
+          class="topbar-search"
+          placeholder="Czego szukasz?"
+        />
+      </form>
+      {% if app.user %}
+      <a class="topbar-action" href="{{ path('profile') }}">
+        <ion-icon name="person-circle-outline" class="icon"></ion-icon>
+      </a>
+      <a class="topbar-action topbar-wishlist" href="{{ path('wishlist') }}">
+        <ion-icon name="heart-outline" class="icon"></ion-icon>
+        <p class="topbar-wishlist-count hidden"></p>
+      </a>
+      <a class="topbar-action" href="{{ path('cart') }}">
+        <ion-icon name="cart-outline" class="icon"></ion-icon>
+      </a>
+      {% else %}
+      <a href="{{ path('app_login') }}" class="topbar-login">
+        <ion-icon name="happy-outline" class="icon"></ion-icon>
+        <span class="topbar-nomobile">Zaloguj się</span>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="topbar-bot">
+    <div class="topbar-category-list">
+      {% for category in categories %}
+      <a
+        href="{{ path('category', { category: category.url }) }}"
+        class="topbar-category"
+        >{{ category.name }}</a
+      >
+      {% endfor %}
+    </div>
+  </div>
+</header>

@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %} {% block site_content %}
+<div class="homepage-banner">
+  <img src="{{ asset('img/banner.jpg') }}" />
+</div>
+<div class="homepage-content">
+  <p class="homepage-header">Produkt dnia</p>
+  <a
+    href="{{ path('product', { product: productOfTheDay.url }) }}"
+    class="homepage-pod"
+  >
+    <div class="left">
+      <img
+        src="{{ asset('img/products/' ~ productOfTheDay.image ~ '.jpg') }}"
+      />
+    </div>
+    <div class="right">
+      <p class="homepage-pod-name">{{ productOfTheDay.name }}</p>
+      <div class="search-product-properties">
+        {% for property in productOfTheDay.productProperties %}
+        <p class="search-product-property">
+          <span>{{ property.name }}:</span> {{ property.value }}
+        </p>
+        {% endfor %}
+      </div>
+      <p class="search-product-price">
+        {% if productOfTheDay.discount %}
+        <span class="before">{{ productOfTheDay.price }} zł</span>
+        <span class="actual">{{ productOfTheDay.discount.price }} zł</span>
+        {% else %}
+        <span class="actual">{{ productOfTheDay.price }} zł</span>
+        {% endif %}
+      </p>
+    </div>
+  </a>
+  <p class="homepage-header">Wyróżnione produkty</p>
+  <div class="homepage-featured-container">
+    {% for featured in featuredProducts %}
+    <a
+      href="{{ path('product', { product: featured.url }) }}"
+      class="homepage-featured"
+    >
+      <div class="top">
+        <img src="{{ asset('img/products/' ~ featured.image ~ '.jpg') }}" />
+      </div>
+      <div class="bottom">
+        <p class="homepage-pod-name">{{ featured.name }}</p>
+        <div class="search-product-properties">
+          {% for property in featured.productProperties %}
+          <p class="search-product-property">
+            <span>{{ property.name }}:</span> {{ property.value }}
+          </p>
+          {% endfor %}
+        </div>
+        <p class="search-product-price">
+          {% if featured.discount %}
+          <span class="before">{{ featured.price }} zł</span>
+          <span class="actual">{{ featured.discount.price }} zł</span>
+          {% else %}
+          <span class="actual">{{ featured.price }} zł</span>
+          {% endif %}
+        </p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

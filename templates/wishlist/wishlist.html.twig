@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %} {% block site_content %}
+<div class="cart">
+  <p class="profile-hi">Twoja lista życzeń</p>
+  {% if wishlistItems | length == 0 %}
+  <div class="cart-empty">
+    <p class="cart-empty-text">
+      Twoja lista życzeń jest jeszcze pusta, dodaj coś do niej!
+    </p>
+    <img class="cart-empty-img" src="{{ asset('img/emptywishlist.png') }}" />
+  </div>
+  {% else %}{% set cartTotal = 0 %}{% for item in wishlistItems %} {% set
+  product = item.product %}{% set cartTotal = cartTotal + product.price %}
+  <a class="cart-item" href="{{ path('product', { product: product.url }) }}">
+    <img
+      class="cart-img"
+      src="{{ asset('img/products/' ~ product.image ~ '.jpg') }}"
+    />
+    <div class="wishlist-mid">
+      <p>{{ product.name }}</p>
+      <p>
+        {% if product.discount %}
+        <span class="actual">{{ product.discount.price }} zł</span>
+        <span class="before">{{ product.price }} zł</span>
+        {% else %}
+        <span class="actual">{{ product.price }} zł</span>
+        {% endif %}
+      </p>
+    </div>
+    <div class="wishlist-right">
+      <form method="POST" action="{{ path('cart_add') }}">
+        <input
+          class="hidden"
+          type="number"
+          name="productId"
+          value="{{ product.id }}"
+        />
+        <button class="cart-remove wishlist-cart">
+          <ion-icon name="cart" class="icon"></ion-icon> DO KOSZYKA
+        </button>
+      </form>
+      <form method="POST" action="{{ path('wishlist_delete') }}">
+        <input
+          class="hidden"
+          type="number"
+          name="wishlistId"
+          value="{{ item.id }}"
+        />
+        <button class="cart-remove">
+          <ion-icon name="close" class="icon"></ion-icon>
+        </button>
+      </form>
+    </div>
+  </a>
+  {% endfor %} {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %} {% block site_content %}
+<div class="profile-container">
+  <p class="profile-hi profile-flex">Cześć, {{ user.name }} <a class="profile-logout" href="{{ path('app_logout') }}">Wyloguj się</a></p>
+  <p class="profile-section">Edytuj swój profil</p>
+  <p class="product-section">Zmień imię:</p>
+  <form
+    class="product-form"
+    action="{{ path('profile_change_name') }}"
+    method="POST"
+  >
+    <input name="newName" class="profile-input" placeholder="Podaj nowe imię" />
+    <button class="profile-button">Zapisz</button>
+  </form>
+  <div>
+    <p class="profile-section">Twoje zakupy</p>
+  </div>
+  {% if boughtItems | length == 0 %}
+  <div class="profile-zerobought">
+    <p class="profile-zerobought-text">Jeszcze nic nie kupiłeś. <br />RUSZAJ NA ZAKUPY!</p>
+    <img class="profile-zerobought-img" src="{{ asset('img/zerobought.png') }}"/>
+  </div>
+  {% else %}{% for bought in boughtItems %} {% set product = bought.product %}
+  <div class="profile-bought">
+    <img
+      class="profile-bought-img"
+      src="{{ asset('img/products/' ~ product.image ~ '.jpg') }}"
+    />
+    <p class="profile-bought-text">
+      {{ product.name }} <span>({{ bought.datetime|date("d/m/Y H:i") }})</span>
+    </p>
+  </div>
+  {% endfor %} {% endif %}
+</div>
+{% endblock %}

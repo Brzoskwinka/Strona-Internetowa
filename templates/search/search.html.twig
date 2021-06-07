@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %} {% block site_content %} {% if products|length ==
+0 %}
+<div class="search-missing">
+  <p>Wygląda na to,<br />że nic tu nie ma.</p>
+  <div>
+    <img src="{{ asset('img/notfound.png') }}" />
+  </div>
+  <a href="{{ path('homepage') }}">Powrót do strony głównej</a>
+</div>
+{% else %}
+<div class="search-list">
+  {% for product in products %}
+  <div class="search-product">
+    <img
+      src="{{ asset('img/products/' ~ product.image ~ '.jpg') }}"
+      class="search-product-img"
+    />
+    <a
+      href="{{ path('product', { product: product.url }) }}"
+      class="search-product-name"
+      >{{ product.name }}</a
+    >
+    <div class="search-product-properties">
+      {% for property in product.productProperties %}
+      <p class="search-product-property">
+        <span>{{ property.name }}:</span> {{ property.value }}
+      </p>
+      {% endfor %}
+    </div>
+    <p class="search-product-price">
+      {% if product.discount %}
+      <span class="before">{{ product.price }} zł</span>
+      <span class="actual">{{ product.discount.price }} zł</span>
+      {% else %}
+      <span class="actual">{{ product.price }} zł</span>
+      {% endif %}
+    </p>
+    <div class="login-protect">
+      <div class="login-protect-overlay {% if app.user %}hidden{% endif %}">
+        Tylko dla<br />zalogowanych
+      </div>
+      <form
+        method="POST"
+        action="{{ path('cart_add') }}"
+        class="search-to-cart-form"
+      >
+        <input
+          class="hidden"
+          type="number"
+          name="productId"
+          value="{{ product.id }}"
+        />
+        <button class="search-product-button cart-button">
+          Dodaj do koszyka
+        </button>
+      </form>
+      <form
+        method="POST"
+        action="{{ path('wishlist_add') }}"
+        class="search-to-cart-form"
+      >
+        <input
+          class="hidden"
+          type="number"
+          name="productId"
+          value="{{ product.id }}"
+        />
+        <button class="search-product-button wishlist-button">
+          Dodaj do listy życzeń
+        </button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %} {% endblock %}

@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,100&display=swap");
+* {
+  font-family: "Poppins";
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.hidden {
+  display: none !important;
+}
+@import "components/variables";
+@import "components/components";
+@import "topbar/topbar";
+@import "footer/footer";
+@import "homepage/homepage";
+@import "search/search";
+@import "product/product";
+@import "profile/profile";
+@import "cart/cart";
+@import "wishlist/wishlist";
+@import "login/login";

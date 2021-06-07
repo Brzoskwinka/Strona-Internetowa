@@ -1,0 +1,140 @@
+.search-list {
+  padding: 25px 15px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 930px;
+  margin: 0 auto;
+}
+.search-product {
+  width: calc(100% / 3);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background-color 0.2s;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 25px;
+  &:hover {
+    background-color: #eee;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .search-list {
+    width: 100%;
+  }
+  .search-product {
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .search-product {
+    width: 100%;
+  }
+}
+.search-product-img {
+  margin-bottom: 10px;
+  width: 100%;
+  object-fit: contain;
+  height: 200px;
+}
+.search-product-name {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  height: 50px;
+  overflow: hidden;
+  color: #000;
+  text-decoration: none;
+}
+.search-product-price {
+  text-align: right;
+  margin-bottom: 10px;
+  width: 100%;
+  .actual {
+    font-size: 24px;
+    font-weight: 500;
+    color: $main;
+  }
+  .before {
+    margin-right: 3px;
+    font-size: 14px;
+    color: #999;
+  }
+}
+.search-product-properties {
+  margin: 0 auto 10px auto;
+  width: calc(100% - 20px);
+  background-color: rgba(243, 157, 18, 0.15);
+  padding: 5px;
+  height: 62px;
+  font-size: 12px;
+  text-align: left;
+  overflow: hidden;
+}
+.search-product-property {
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  span {
+    font-weight: 700;
+  }
+}
+.search-product-button {
+  cursor: pointer;
+  width: 100%;
+  background-color: transparent;
+  border: 2px solid $main;
+  padding: 8px 0;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s;
+  &:hover,
+  &.cart-button:hover {
+    background-color: $main-hover;
+    color: #fff;
+    border-color: $main-hover;
+  }
+
+  &.cart-button {
+    margin-bottom: 10px;
+    background-color: $main;
+    color: #fff;
+    border: 0;
+  }
+}
+.search-to-cart-form {
+  width: 100%;
+}
+.search-missing {
+  width: 100%;
+  height: calc(100vh - 201px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  p {
+    font-size: 32px;
+    color: $main;
+    text-align: center;
+  }
+  div {
+    margin: 25px 0;
+    width: 320px;
+    height: 250px;
+    position: relative;
+  }
+  img {
+    position: absolute;
+    top: -70px;
+    left: 0;
+    margin: 25px 0;
+    width: 320px;
+    height: 320px;
+    object-fit: contain;
+  }
+  a {
+    color: $main;
+    font-size: 20px;
+    font-weight: 600;
+  }
+}

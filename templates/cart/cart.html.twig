@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %} {% block site_content %}
+<div class="cart">
+  <p class="profile-hi">Twój koszyk</p>
+  <p class="profile-section">Przedmioty w koszyku</p>
+  {% if cartItems | length == 0 %}
+  <div class="cart-empty">
+    <p class="cart-empty-text">
+      Twój koszyk jest jeszcze pusty, dodaj coś do niego!
+    </p>
+    <img class="cart-empty-img" src="{{ asset('img/emptycart.png') }}" />
+  </div>
+  {% else %}{% set cartTotal = 0 %}{% for item in cartItems %} {% set product =
+  item.product %} {% if product.discount %} {% set cartTotal = cartTotal +
+  product.discount.price %} {% else %} {% set cartTotal = cartTotal +
+  product.price %} {% endif %}
+  <a class="cart-item" href="{{ path('product', { product: product.url }) }}">
+    <img
+      class="cart-img"
+      src="{{ asset('img/products/' ~ product.image ~ '.jpg') }}"
+    />
+    <div class="cart-mid">
+      <p>{{ product.name }}</p>
+      {% if product.discount %}
+      <span class="actual">{{ product.discount.price }} zł</span>
+      {% else %}
+      <span class="actual">{{ product.price }} zł</span>
+      {% endif %}
+    </div>
+    <div class="cart-right">
+      <form method="POST" action="{{ path('cart_delete') }}">
+        <input
+          class="hidden"
+          type="number"
+          name="cartId"
+          value="{{ item.id }}"
+        />
+        <button class="cart-remove">
+          <ion-icon name="close" class="icon"></ion-icon>
+        </button>
+      </form>
+    </div>
+  </a>
+  {% endfor %}
+  <div class="cart-compatibility">
+    <p class="profile-section">Sprawdź kompatybilność</p>
+    <div class="cart-comp-flex">
+      <select class="cart-prod1" name="prod1">
+        {% for item in cartItems %} {% set product = item.product %} {% if
+        product.category.id == 4 %}
+        <option value="{{ product.id }}">{{ product.name }}</option>
+        {% endif %} {% endfor %}
+      </select>
+      <select class="cart-prod2" name="prod2">
+        {% for item in cartItems %} {% set product = item.product %} {% if
+        product.category.id == 4 %}
+        <option value="{{ product.id }}">{{ product.name }}</option>
+        {% endif %} {% endfor %}
+      </select>
+    </div>
+    <button class="cart-comp-check">Sprawdź kompatybilność</button>
+    <div class="cart-comp-message">
+      <div class="cart-comp hidden" data-comp-code="1">
+        Pierwszy produkt nie podlega kompatybilności
+      </div>
+      <div class="cart-comp hidden" data-comp-code="2">
+        Drugi produkt nie podlega kompatybilności
+      </div>
+      <div class="cart-comp pos hidden" data-comp-code="3">
+        Produkty są kompatybilne
+      </div>
+      <div class="cart-comp neg hidden" data-comp-code="4">
+        Produkty nie są kompatybilne
+      </div>
+    </div>
+  </div>
+  <div class="cart-bottom">
+    <p class="cart-total">
+      Łączna kwota zamówienia: <span>{{ cartTotal }} zł</span>
+    </p>
+    <a href="{{ path('cart_buy') }}" class="cart-buy">KUP TERAZ</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

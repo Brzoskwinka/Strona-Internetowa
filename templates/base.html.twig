@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
+    {% block stylesheets %} {% endblock %}
+  </head>
+  <body class="body">
+    {% block body %} {% include('components/topbar.html.twig') %} {% block
+    site_content %} {% endblock %} {% include('components/footer.html.twig') %}
+    {% endblock %}
+    <div class="ad hidden">
+      <div class="close-container">
+        <button class="close">
+          <ion-icon name="close-circle-outline" class="icon"></ion-icon>
+        </button>
+      </div>
+      <img src="#" class="image" />
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+    <script src="{{ asset('js/wishlist.js') }}"></script>
+    <script src="{{ asset('js/ad.js') }}"></script>
+    <script src="{{ asset('js/cart.js') }}"></script>
+    {% block javascripts %} {% endblock %}
+  </body>
+</html>
